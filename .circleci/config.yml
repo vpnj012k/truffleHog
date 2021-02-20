@@ -9,7 +9,7 @@ jobs:
           pkg-manager: pipenv
       - run:
           command: |
-            pipenv run truffleHog ~/project/truffleHog --regex 
+            pipenv run truffleHog ~/project --regex 
           name: Test secret search 
 orbs:
   python: circleci/python@1.0.0
