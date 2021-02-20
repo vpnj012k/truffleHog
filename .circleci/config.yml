@@ -9,7 +9,7 @@ jobs:
           pkg-manager: pipenv
       - run:
           command: |
-            pipenv run truffleHog --regex --entropy https://github.com/dxa4481/truffleHog.git --json ¦ tee secrets-test.json
+            pipenv run truffleHog --regex --entropy https://github.com/dxa4481/truffleHog.git --json >> secrets-test.json
           name: Test it
 orbs:
   python: circleci/python@1.0.0
