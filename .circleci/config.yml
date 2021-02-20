@@ -1,23 +1,18 @@
+
 jobs:
   build:
     executor: python/default
     steps:
       - checkout
       - python/install-packages:
-          pkg-manager: pipenv
-      - python/install-packages:
-          pip-dependency-file: dev-requirements.txt
-          pkg-manager: pipenv
-      - python/install-packages:
           args: truffleHog
           pkg-manager: pipenv
-          pypi-cache: false
       - run:
           command: |
-            truffleHoh --version
-          name: Test
+            pipenv run truffleHog --version
+          name: Test it
 orbs:
-  python: circleci/python@1.1.0
+  python: circleci/python@1.0.0
 version: 2.1
 workflows:
   main:
