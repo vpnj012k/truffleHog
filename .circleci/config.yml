@@ -2,6 +2,7 @@
 jobs:
   build:
     executor: python/default
+    working_directory: ~/project
     steps:
       - checkout
       - python/install-packages:
@@ -9,8 +10,11 @@ jobs:
           pkg-manager: pipenv
       - run:
           command: |
-            pipenv run truffleHog ~/project --regex --json >> secrets-check.json
+            pipenv run truffleHog ~/project --regex --json >> ~/project/secrets-check.json
           name: Test secret search 
+      - store_artifacts:
+          path: ~/project/secrets-check.json
+          destination: artifact-file
 orbs:
   python: circleci/python@1.0.0
 version: 2.1
