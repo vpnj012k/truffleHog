@@ -1,4 +1,6 @@
 
+
+
 jobs:
   build:
     executor: python/default
@@ -15,10 +17,29 @@ jobs:
       - store_artifacts:
           path: ~/project/secrets-check.json
           destination: artifact-file
+
+  scan:
+      docker:
+          - image: circleci/python:latest
+      working_directory: ~/project
+      steps:
+          - checkout
+          - run: sudo pip install trufflehog
+          - run: trufflehog ~/project --json >> ~/project/secrets-check2.json
+          - store_artifacts:
+             path: ~/project/secrets-check2.json
+             destination: artifact-file
+
+
+
+
+
 orbs:
   python: circleci/python@1.0.0
+  trufflehog_orb: sandbox/trufflehog_orb@0.0.2
 version: 2.1
 workflows:
   main:
     jobs:
       - build
+      - scan
